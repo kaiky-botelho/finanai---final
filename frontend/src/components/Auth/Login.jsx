@@ -1,0 +1,128 @@
+import React, { useState } from 'react';
+import { Brain, Mail, Lock, LogIn, ArrowRight } from 'lucide-react';
+
+export default function Login({ onLogin, onSwitchToRegister }) {
+  const [email, setEmail] = useState('');
+  const [senha, setSenha] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrorMsg('');
+
+    if (!email.trim() || !senha.trim()) {
+      setErrorMsg('Por favor, preencha todos os campos.');
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      // Simula um delay muito sutil para micro-animação
+      await new Promise(resolve => setTimeout(resolve, 800));
+      onLogin(email, senha);
+    } catch (err) {
+      setErrorMsg(err.message || 'Falha ao realizar login. Verifique suas credenciais.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-[#080c14] flex flex-col justify-center items-center px-4 relative overflow-hidden font-sans">
+      
+      {/* Círculos de luz decorativos de fundo */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/10 blur-3xl rounded-full pointer-events-none"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-emerald-600/5 blur-3xl rounded-full pointer-events-none"></div>
+
+      <div className="w-full max-w-md animate-fade-in-up z-10">
+        
+        {/* Logo */}
+        <div className="flex flex-col items-center mb-8">
+          <div className="bg-gradient-to-tr from-indigo-600 to-indigo-400 p-3 rounded-2xl shadow-glow-primary mb-3">
+            <Brain className="h-8 w-8 text-white animate-pulse" />
+          </div>
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-white via-slate-100 to-indigo-300 bg-clip-text text-transparent">
+            Acessar FinanAI
+          </h1>
+          <p className="text-xs text-slate-400 mt-1">Seu organizador financeiro com inteligência de negócios</p>
+        </div>
+
+        {/* Cartão Glassmorphism */}
+        <div className="glass-card p-8 rounded-3xl border border-white/10 shadow-2xl relative">
+          
+          {errorMsg && (
+            <div className="bg-rose-950/50 border border-rose-800/40 text-rose-300 text-xs p-3 rounded-xl mb-6 text-center animate-pulse">
+              {errorMsg}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+            
+            {/* E-mail */}
+            <div>
+              <label className="text-xs font-semibold text-slate-400 block mb-1.5">E-mail corporativo ou pessoal</label>
+              <div className="relative">
+                <Mail className="absolute left-3.5 top-3 h-4.5 w-4.5 text-slate-500" />
+                <input 
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl py-2.5 pl-11 pr-4 text-sm text-white focus:outline-none focus:border-indigo-500 transition"
+                  placeholder="seuemail@exemplo.com"
+                  required
+                  disabled={isLoading}
+                />
+              </div>
+            </div>
+
+            {/* Senha */}
+            <div>
+              <label className="text-xs font-semibold text-slate-400 block mb-1.5">Senha secreta</label>
+              <div className="relative">
+                <Lock className="absolute left-3.5 top-3 h-4.5 w-4.5 text-slate-500" />
+                <input 
+                  type="password"
+                  value={senha}
+                  onChange={(e) => setSenha(e.target.value)}
+                  className="w-full bg-slate-950 border border-white/10 rounded-xl py-2.5 pl-11 pr-4 text-sm text-white focus:outline-none focus:border-indigo-500 transition"
+                  placeholder="••••••••"
+                  required
+                  disabled={isLoading}
+                />
+              </div>
+            </div>
+
+            {/* Botão Enviar */}
+            <button 
+              type="submit"
+              disabled={isLoading}
+              className="w-full py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-xs font-bold text-white shadow-glow-primary transition flex items-center justify-center gap-2 disabled:opacity-50 mt-6 cursor-pointer"
+            >
+              {isLoading ? (
+                <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+              ) : (
+                <>
+                  Entrar no Painel <LogIn className="h-4 w-4" />
+                </>
+              )}
+            </button>
+          </form>
+        </div>
+
+        {/* Link para criar conta */}
+        <p className="text-xs text-center text-slate-500 mt-6">
+          Não tem uma conta cadastrada?{' '}
+          <button 
+            onClick={onSwitchToRegister}
+            className="text-indigo-400 hover:text-indigo-300 font-semibold transition hover:underline cursor-pointer"
+          >
+            Criar conta agora <ArrowRight className="inline h-3 w-3 align-middle ml-0.5" />
+          </button>
+        </p>
+
+      </div>
+    </div>
+  );
+}
