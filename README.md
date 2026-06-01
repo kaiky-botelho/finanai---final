@@ -1,5 +1,8 @@
 # FinanAI — Organizador Financeiro Inteligente 🚀 (v2)
 
+> **Observação importante:** Este projeto foi desenvolvido utilizando o **Antigravity** como ferramenta de apoio no processo de criação, estruturação e implementação da solução.  
+> O desenvolvimento foi realizado para o trabalho da disciplina de **Engenharia de Prompt e Aplicação em Inteligência Artificial**, aplicando conceitos de prompt engineering na construção de uma aplicação funcional com apoio de inteligência artificial.
+
 O **FinanAI** é uma aplicação web de finanças pessoais de alta performance que utiliza inteligência artificial de ponta para automatizar a organização, classificação e análise do seu orçamento, agora expandido para um ecossistema com **Autenticação Protegida**, **Isolamento de Dados por Usuário** e um **Assistente Conversacional IA (Chatbot)**!
 
 Este projeto foi desenhado sob uma arquitetura profissional de alta segurança, onde a comunicação com as APIs de IA é encapsulada em um backend Node.js robusto, protegendo as chaves de API contra vazamentos no frontend.
